@@ -1,18 +1,20 @@
-require'nvim-treesitter.configs'.setup {
-    ensure_installed = { "lua", "python", "javascript", "html", "css", "bash" }, 
-  highlight = {
-    enable = true,                 
-  },
-  incremental_selection = {
-    enable = true,
-    keymaps = {
-      init_selection = "<CR>",        
-      node_incremental = "<TAB>",     
-      scope_incremental = "<S-TAB>", 
+
+require('telescope').setup({
+    defaults = {
+        mappings = {
+            i = {
+                ["<C-j>"] = "move_selection_next",
+                ["<C-k>"] = "move_selection_previous",
+            },
+        },
     },
-  },
-  indent = {
-    enable = true,                 
-  },
-}
+    pickers = {
+        find_files = {
+            theme = "dropdown",
+        },
+    },
+    extensions = {
+        -- Add extensions if needed
+    },
+})
 

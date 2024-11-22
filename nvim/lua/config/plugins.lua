@@ -1,102 +1,102 @@
-vim.cmd [[packadd packer.nvim]]
+return function(use)
+    -- Packer itself
+    use 'wbthomason/packer.nvim'
 
-return require('packer').startup(function(use)
-	use 'wbthomason/packer.nvim'
-	use {
-		'nvim-telescope/telescope.nvim', tag = '0.1.8',
-		requires = { {'nvim-lua/plenary.nvim'} }
-	}
-	use { "bluz71/vim-moonfly-colors", name = "moonfly" }
-	use {'ryanoasis/vim-devicons'}
-	use {
-		'nvim-treesitter/nvim-treesitter',
-		run = 'TSUpdate',
-	}
-	use {
-		'hrsh7th/nvim-cmp',
-		'hrsh7th/cmp-nvim-lsp',
-		'hrsh7th/cmp-buffer',
-		'hrsh7th/cmp-path',
-		'saadparwaiz1/cmp_luasnip',
-		'L3MON4D3/LuaSnip',
-		'neovim/nvim-lspconfig',
-		'nvim-lua/plenary.nvim',
-	}
-	use {
-		'williamboman/mason.nvim',
-		config = function()
-			require('mason').setup()
-		end
-	}
-	use {
-		'williamboman/mason-lspconfig.nvim',
-		config = function()
-			require('mason-lspconfig').setup({
-				ensure_installed = {
-					'lua_ls',
-					'ts_ls',
-					'pyright',
-					'rust_analyzer',
-					'bashls',
-					'ruff',
-				},
-				automatic_installation = true,
-			})
-		end
-	}
-	use {
-		'jupyter-vim/jupyter-vim',
-		run = 'pip install jupyter-vim'
-	}
-	use {
-		'3rd/image.nvim',
-	}
-	use {
-		'kyazdani42/nvim-web-devicons',
-	}
-	use {
-		'nvim-tree/nvim-tree.lua',
-		require('nvim-tree').setup({
-			disable_netrw = true,
-			hijack_netrw = true,
-			open_on_tab = false,
-			update_focused_file = {
-				enable = true,
-				update_cwd = false,
-			},
-		})
-	}
-	use {
-		'nvim-tree/nvim-web-devicons',
-		require('nvim-web-devicons').setup({
-			default = true,
-		})
-	}
-	use {
-		"zbirenbaum/copilot.lua",
-		cmd = "Copilot",
-		event = "InsertEnter",
-		config = function()
-			require("copilot").setup({})
-		end,
-	}use {
-		"zbirenbaum/copilot-cmp",
-		after = { "copilot.lua" },
-		config = function ()
-			require("copilot_cmp").setup({
-				suggestion = {enabled = false},
-				panel = {enabled = false},
-			})
-		end
-	}
-	use {
-		'smartpde/telescope-recent-files.nvim',
-	}
+    -- Telescope
+    use {
+        'nvim-telescope/telescope.nvim',
+        tag = '0.1.8',
+        requires = { { 'nvim-lua/plenary.nvim' } },
+        config = function() require('config.telescope') end
+    }
 
-end, {
-		config = {
-			auto_clean = false,
-			compile_on_sync = true,
-		}
-	})
+    -- Colorscheme
+    use { "bluz71/vim-moonfly-colors", name = "moonfly" }
+
+    -- Icons
+    use 'ryanoasis/vim-devicons'
+    use {
+        'kyazdani42/nvim-web-devicons',
+        config = function() require('nvim-web-devicons').setup({ default = true }) end
+    }
+
+    -- Treesitter
+    use {
+        'nvim-treesitter/nvim-treesitter',
+        run = 'TSUpdate',
+        config = function() require('config.treesitter') end
+    }
+
+    -- Completion and Snippets
+    use {
+        'hrsh7th/nvim-cmp',
+        'hrsh7th/cmp-nvim-lsp',
+        'hrsh7th/cmp-buffer',
+        'hrsh7th/cmp-path',
+        'saadparwaiz1/cmp_luasnip',
+        'L3MON4D3/LuaSnip'
+    }
+
+    -- LSP Configuration
+    use {
+        'neovim/nvim-lspconfig',
+        config = function() require('config.lsp') end
+    }
+
+    -- Mason for LSP management
+    use {
+        'williamboman/mason.nvim',
+        config = function() require('config.mason') end
+    }
+    use {
+        'williamboman/mason-lspconfig.nvim',
+        config = function()
+            require('mason-lspconfig').setup({
+                ensure_installed = { 'lua_ls', 'ts_ls', 'pyright', 'rust_analyzer', 'bashls', 'ruff' },
+                automatic_installation = true,
+            })
+        end
+    }
+
+    -- Jupyter integration
+    use {
+        'jupyter-vim/jupyter-vim',
+        run = 'pip install jupyter-vim'
+    }
+
+    -- Image support
+    use '3rd/image.nvim'
+
+    -- Nvim Tree
+    use {
+        'nvim-tree/nvim-tree.lua',
+        config = function() require('config.nvim-tree') end
+    }
+
+    -- Copilot
+    use {
+        "zbirenbaum/copilot.lua",
+        cmd = "Copilot",
+        event = "InsertEnter",
+        config = function() require('config.copilot') end
+    }
+    use {
+        "zbirenbaum/copilot-cmp",
+        after = { "copilot.lua" },
+        config = function()
+            require("copilot_cmp").setup({
+                suggestion = { enabled = false },
+                panel = { enabled = false },
+            })
+        end
+    }
+
+    use {
+        "nvim-telescope/telescope-frecency.nvim",
+        requires = { "tami5/sqlite.lua" },
+        config = function()
+            require('telescope').load_extension('frecency')
+        end
+    }
+end
 
