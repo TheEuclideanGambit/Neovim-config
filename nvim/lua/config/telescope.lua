@@ -1,3 +1,5 @@
+-- telescope.lua
+
 require('telescope').setup({
     defaults = {
         mappings = {
@@ -14,9 +16,9 @@ require('telescope').setup({
     },
     extensions = {
         frecency = {
-            show_scores = true,       -- Show scores for recent files
-            show_unindexed = true,    -- Include files not indexed in the database
-            ignore_patterns = {"*.git/*", "*/tmp/*"}, -- Ignore patterns
+            show_scores = true,
+            show_unindexed = true,
+            ignore_patterns = {"*.git/*", "*/tmp/*"},
         },
     },
 })

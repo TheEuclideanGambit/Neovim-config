@@ -1,20 +1,9 @@
+-- treesitter.lua
 
-require('telescope').setup({
-    defaults = {
-        mappings = {
-            i = {
-                ["<C-j>"] = "move_selection_next",
-                ["<C-k>"] = "move_selection_previous",
-            },
-        },
-    },
-    pickers = {
-        find_files = {
-            theme = "dropdown",
-        },
-    },
-    extensions = {
-        -- Add extensions if needed
-    },
-})
+require('nvim-treesitter.configs').setup {
+  ensure_installed = { "lua", "python", "javascript" },
+  highlight = { enable = true },
+  incremental_selection = { enable = true },
+  indent = { enable = true },
+}
 
